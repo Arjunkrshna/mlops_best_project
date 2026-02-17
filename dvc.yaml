@@ -1,0 +1,18 @@
+stages:
+  prepare_data:
+    cmd: python training/train.py --prepare-data
+    deps:
+      - training/train.py
+      - data/raw
+    outs:
+      - data/processed
+  train_model:
+    cmd: python training/train.py --train --config training/config/training_config.yaml
+    deps:
+      - training/train.py
+      - data/processed
+      - training/config/training_config.yaml
+    outs:
+      - models/model.pkl
+    metrics:
+      - metrics/metrics.json
